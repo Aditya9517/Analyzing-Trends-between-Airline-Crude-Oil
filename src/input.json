@@ -1,0 +1,8 @@
+{
+  "input_file": "src/test.csv",
+  "output_file": "src/plot.png",
+  "start": [2020],
+  "freq": 12,
+  "dt_format": "%b %d %Y %H:%M",
+  "tm_zone":"GMT"
+}
