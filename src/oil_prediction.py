@@ -14,7 +14,6 @@ from keras.layers import Dropout, Dense
 warnings.filterwarnings("ignore")
 
 
-
 def read_data(data):
     """
     reads the data from CSV file, renames column names, plots the
@@ -150,27 +149,3 @@ def oil_prediction_lstm(wti_data):
     plt.plot(x, predict_test_data[:, 0][:360], 'r', label='production')
     plt.show()
     plt.tight_layout()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
