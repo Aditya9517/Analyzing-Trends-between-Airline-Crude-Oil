@@ -6,7 +6,6 @@ import csv
 from newspaper import Article
 from datetime import datetime
 import json
-import Algorithmia
 import nltk
 import warnings
 warnings.filterwarnings('ignore')

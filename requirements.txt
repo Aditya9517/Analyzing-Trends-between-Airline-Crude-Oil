@@ -1,0 +1,11 @@
+wordcloud
+statsmodels
+newspaper
+matplotlib==3.1.2
+numpy==1.18.1
+requests==2.22.0
+beautifulsoup4==4.8.2
+article==0.1.1
+nltk==3.4.5
+pandas==1.0.0
+sklearn==0.0
