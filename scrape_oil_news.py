@@ -3,7 +3,6 @@ import requests
 import json
 from newspaper import Article
 from datetime import datetime
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 def get_web_page_link(url="https://oilprice.com/Latest-Energy-News/World-News/"):
