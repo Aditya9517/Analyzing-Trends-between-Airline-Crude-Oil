@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from src.oil_prediction import read_data
+from src.oil_price_trend import read_data
 from src.sentiment_analysis_news_articles import news_article_sentiment
 import warnings
 
@@ -21,7 +21,7 @@ def main():
 
     args = parser.parse_args()
 
-    # read_data(args.crudeOilFile)
+    read_data(args.crudeOilFile)
     news_article_sentiment(args.crudeOilNews)
 
 
