@@ -37,6 +37,7 @@ def prediction(data):
 
     forecast = fb_forecasting.predict(future)
     fb_forecasting.plot_components(forecast)
+    plt.title("Trend analysis of crude oil prices")
     plt.savefig('Results/trend.png', bbox_inches='tight')
     plt.show()
     fb_forecasting.plot(forecast)
