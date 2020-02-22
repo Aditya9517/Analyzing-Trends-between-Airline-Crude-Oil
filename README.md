@@ -14,6 +14,7 @@ Data for this project is stored as a csv in [Data](https://github.com/Aditya9517
 
 Required libraries are defined in [requirements.txt](https://github.com/Aditya9517/Analyzing-Trends-between-Airline-Crude-Oil/blob/master/requirements.txt)
 
+## Installing Dependencies
 ```
 pip3 install -r requirements.txt
 ```
@@ -27,5 +28,9 @@ specifically relating to crude oil news.
 python3 scrape_oil_news.py
 ```
 
+Collating on time flight performance data (2016)
 
+```
+python3 collate_flight_data.py
+```
 

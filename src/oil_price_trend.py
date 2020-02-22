@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jan 30 2020
+
+@author: Aditya Kalyan Jayanti
+"""
+
 import matplotlib.pyplot as plt
 import pandas as pd
 
