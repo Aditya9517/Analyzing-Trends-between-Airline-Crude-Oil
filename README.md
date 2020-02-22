@@ -10,7 +10,7 @@ prices affect airlines using Machine Learning and Natural Language Processing.
 
 ### Prerequisites
 
-Data for this project is stored as a csv in [Data](https://github.com/Aditya9517/Analyzing-Trends-between-Airline-Crude-Oil/tree/master/Data)
+Data for this project is stored as a csv in [Data](https://drive.google.com/drive/folders/1mS6ugNkT0UXWv9HV6VZMFVCkSpdPNe8X?usp=sharing)
 
 Required libraries are defined in [requirements.txt](https://github.com/Aditya9517/Analyzing-Trends-between-Airline-Crude-Oil/blob/master/requirements.txt)
 
