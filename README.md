@@ -14,6 +14,31 @@ Data for this project is stored as a csv in [Data](https://drive.google.com/driv
 
 Required libraries are defined in [requirements.txt](https://github.com/Aditya9517/Analyzing-Trends-between-Airline-Crude-Oil/blob/master/requirements.txt)
 
+Software to be installed:
+* Anaconda Python 3.7
+* Python3
+
+Additionally, the following Python modules are required:
+* numpy
+* pandas
+* matplotlib
+* sklearn
+* keras
+* mpl_toolkits
+* newspaper3k
+* datetime
+* BeautifulSoup
+* json
+* requests
+* OrderedDict
+* wordcloud
+* statsmodels
+* nltk.sentiment.vader
+* wordcloud
+* fbprophet
+* seaborn
+
+
 ## Installing Dependencies
 ```
 pip3 install -r requirements.txt

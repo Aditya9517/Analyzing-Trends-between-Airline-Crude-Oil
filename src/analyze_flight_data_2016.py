@@ -10,6 +10,7 @@ from collections import OrderedDict
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+from src.reading_airline_data import read_airline_data, airline_statistical_info, visualize_airline_statistics
 
 
 def read_combined_data(file_path="../Data/AirlineData/AirlineFebruary2016.csv"):
@@ -74,7 +75,6 @@ def read_combined_data(file_path="../Data/AirlineData/AirlineFebruary2016.csv"):
 
     handles, labels = plt.gca().get_legend_handles_labels()
     by_label = OrderedDict(zip(labels, handles))
-    print(by_label)
     key_order = ('1 <.< 100', '100 <.< 1000', '1000 <.< 10000',
                  '10000 <.< 100000')
     # key_order = ('1 <.< 100', '100 <.< 1000', '1000 <.< 10000',
@@ -85,6 +85,13 @@ def read_combined_data(file_path="../Data/AirlineData/AirlineFebruary2016.csv"):
     plt.legend(new_label.values(), new_label.keys(), loc=1, prop={'size': 11},
                title='Number of flights per year', frameon=True, framealpha=1)
     plt.savefig('../Results/AirlineOrigin.png', bbox_inches='tight')
+    plt.close()
+
+    airline_data = read_airline_data()
+    airline_statistics = airline_statistical_info(df)
+    print(airline_statistics)
+
+    visualize_airline_statistics(df, airline_data, airline_statistics)
 
 
 if __name__ == '__main__':
