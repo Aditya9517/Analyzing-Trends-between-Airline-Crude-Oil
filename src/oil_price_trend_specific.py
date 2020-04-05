@@ -52,11 +52,3 @@ def prediction(data):
     fb_forecasting.plot(forecast)
     plt.savefig('Results/forecast.png', bbox_inches='tight')
     plt.show()
-
-
-
-
-
-
-
-

@@ -3,6 +3,8 @@
 """
 Created on Wed Jan 29 2020
 
+Updated on Sun Apr 5 2020
+
 @author: Aditya Kalyan Jayanti
 """
 
@@ -31,10 +33,15 @@ def news_article_sentiment(path="ScrapedNewsArticles/oil_news.json"):
         data = json.load(news_file, encoding='utf-8')
 
     reversed_data = OrderedDict()
-    for k in reversed(data):
-        reversed_data[k] = data[k]
 
-    data = reversed_data
+    stack = []
+    for k, v in data.items():
+        stack.append((k, v))
+
+    stack = list(reversed(stack))
+
+    for article in stack:
+        reversed_data[article[0]] = article[1]
 
     # storing value in a variable to be processed in word cloud function
     data_frame_word_cloud = data
