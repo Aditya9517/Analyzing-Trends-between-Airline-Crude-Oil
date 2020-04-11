@@ -16,17 +16,18 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from numpy import log
+from scipy.stats import spearmanr
 from statsmodels.tsa.stattools import adfuller
 from wordcloud import WordCloud, STOPWORDS
 
 
-def eliminate_url_emoji(input1):
+def eliminate_url(input1):
     input_text = input1.encode('ascii', 'ignore').decode('ascii')
     input_text = re.sub(r'http\S+', '', input_text)
     return input_text
 
 
-def news_article_sentiment(path="ScrapedNewsArticles/oil_news.json"):
+def news_article_sentiment(data_oil, path="ScrapedNewsArticles/oil_news.json"):
     sia = SentimentIntensityAnalyzer()
     sentiment_value = {}
     with open(path) as news_file:
@@ -61,7 +62,7 @@ def news_article_sentiment(path="ScrapedNewsArticles/oil_news.json"):
     ax = plt.subplot(211)
     ax.plot(df.year, df['sentiment'],  color='r')
     ax.set_xticks([2012, 2013, 2014, 2015, 2016])
-    plt.ylabel("Mean of sentiment values grouped by year")
+    plt.ylabel("Magnitude of sentiment values")
     plt.xlabel("Year")
     plt.title("Trend of News Sentiment (2012-2016)")
     plt.savefig('Results/SentimentOfCrudeOilNews.png', bbox_inches='tight')
@@ -86,6 +87,19 @@ def news_article_sentiment(path="ScrapedNewsArticles/oil_news.json"):
     # df.rolling('6H').mean().plot()
     # plt.show()
 
+    # CORRELATION
+    print("-----------------CORRELATION--------------")
+    data_oil['Date'] = pd.to_datetime(data_oil['Date'])
+    data_oil['year'] = data_oil['Date'].dt.year
+    data_oil = data_oil.groupby('year').mean().reset_index()
+    range_dates = (data_oil['year'] > 2011) & (data_oil['year'] <= 2016)
+    data_oil = data_oil.loc[range_dates]
+    print(data_oil.head())
+    print(df)
+    corr = data_oil['OilPrice'].corr(df['sentiment'], method="kendall")
+    print("CORR = ", corr)
+    print("-----------------CORRELATION--------------")
+
     # function call to word cloud generator
     word_cloud_generator(data_frame_word_cloud)
 
@@ -96,7 +110,7 @@ def word_cloud_generator(data_frame):
     year_2016 = data_frame[data_frame.date.dt.year.eq(2016)]
     text = ""
     for article in year_2016['article']:
-        text += eliminate_url_emoji(article)
+        text += eliminate_url(article)
     show_word_cloud(text)
 
 
@@ -118,3 +132,5 @@ def show_word_cloud(data):
     plt.axis('off')
     plt.imshow(word_cloud)
     plt.show()
+
+

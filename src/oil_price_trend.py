@@ -53,4 +53,4 @@ def read_data(data="Data/Cushing_OK_WTI_Spot_Price_FOB.csv"):
     plt.title("Average monthly frequency from (1986-2020)", size=25)
     plt.savefig('Results/AverageMonthlyFrequency.png',  bbox_inches='tight')
     # oil_prediction_lstm(data)
-    oil_price_trend_2012_2016(trend_data)
+    return oil_price_trend_2012_2016(trend_data)

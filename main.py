@@ -21,8 +21,8 @@ def main():
 
     args = parser.parse_args()
 
-    read_data(args.crudeOilFile)
-    news_article_sentiment(args.crudeOilNews)
+    data_oil = read_data(args.crudeOilFile)
+    news_article_sentiment(data_oil, args.crudeOilNews)
 
 
 if __name__ == '__main__':
