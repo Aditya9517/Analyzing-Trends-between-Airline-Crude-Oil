@@ -16,14 +16,26 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from numpy import log
-from scipy.stats import spearmanr
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
 from statsmodels.tsa.stattools import adfuller
 from wordcloud import WordCloud, STOPWORDS
+
+stop = ['oil', 'Oil', 'price', 'said', 'Related', 'Top', 'Reads', 'new', 'one', 'well', 'Oilprice.com', 'according', 'say',
+        'first', 'many', 'need', 'see', 'made', 'make', 'much', 'even', 'still', 'two']
+
+stop_words = set(stopwords.words('english'))
+stop_words.update(stop)
 
 
 def eliminate_url(input1):
     input_text = input1.encode('ascii', 'ignore').decode('ascii')
     input_text = re.sub(r'http\S+', '', input_text)
+    word_tokens = word_tokenize(input_text)
+    word_tokens = list(filter(lambda x: x not in stop, word_tokens))
+    print(word_tokens)
+    input_text = ' '.join(filter(lambda w: w not in stop_words, word_tokens))
+
     return input_text
 
 
@@ -64,7 +76,7 @@ def news_article_sentiment(data_oil, path="ScrapedNewsArticles/oil_news.json"):
     ax.set_xticks([2012, 2013, 2014, 2015, 2016])
     plt.ylabel("Magnitude of sentiment values")
     plt.xlabel("Year")
-    plt.title("Trend of News Sentiment (2012-2016)")
+    #plt.title("Trend of News Sentiment (2012-2016)")
     plt.savefig('Results/SentimentOfCrudeOilNews.png', bbox_inches='tight')
 
     # Augmented Dickey-Fuller Test
@@ -109,7 +121,7 @@ def word_cloud_generator(data_frame):
     data_frame['date'] = pd.to_datetime(data_frame['date'])
     year_2016 = data_frame[data_frame.date.dt.year.eq(2016)]
     text = ""
-    for article in year_2016['article']:
+    for article in data_frame['article']:
         text += eliminate_url(article)
     show_word_cloud(text)
 
@@ -120,17 +132,19 @@ def show_word_cloud(data):
     :param data: collection of reviews
     :return:
     """
-    stopwords = STOPWORDS
+    stop_w = set(STOPWORDS)
     word_cloud = WordCloud(
         background_color='white',
-        stopwords=stopwords,
-        max_words=200,
+        stopwords=stop_w,
+        max_words=60,
         max_font_size=40,
         scale=3,
         random_state=1
     ).generate(str(data))
     plt.axis('off')
     plt.imshow(word_cloud)
+
+    plt.savefig('Results/WordCloud.png', bbox_inches='tight')
     plt.show()
 
 

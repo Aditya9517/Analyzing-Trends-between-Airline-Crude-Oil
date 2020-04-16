@@ -10,6 +10,9 @@ Created on Thu Jan 30 2020
 import seaborn as sea
 import matplotlib.pyplot as plt
 from fbprophet import Prophet
+from fbprophet.diagnostics import cross_validation
+from fbprophet.diagnostics import performance_metrics
+from fbprophet.plot import plot_cross_validation_metric
 import pandas as pd
 import copy
 import math
@@ -46,7 +49,7 @@ def prediction(data):
 
     fb_forecasting.fit(data_frame)
 
-    future = fb_forecasting.make_future_dataframe(periods=90)
+    future = fb_forecasting.make_future_dataframe(periods=250)
 
     forecast = fb_forecasting.predict(future)
     fb_forecasting.plot_components(forecast)
@@ -83,3 +86,23 @@ def prediction(data):
     print("Mean Absolute Error = ", mean_abs_error)
     print("Mean Squared Error = ", mean_square_error)
     print("Root Mean Squared Error = ", root_mean_square_error)
+
+    # Prophet Diagnostics
+
+    cross_validation_forecast = cross_validation(fb_forecasting, initial='1259 days', period='180 days',
+                                                 horizon='365 days')
+
+    cutoff = cross_validation_forecast['cutoff'].unique()[0]
+
+    cross_validation_forecast = cross_validation_forecast[cross_validation_forecast['cutoff'].values == cutoff]
+
+    performance = performance_metrics(cross_validation_forecast)
+
+    print(performance.head())
+
+    plot_cross_validation_metric(cross_validation_forecast, metric='mape')
+    plt.title("Cross Validation Performance Metrics")
+    plt.savefig('Results/ProphetDiagnostics.png', bbox_inches='tight')
+    plt.show()
+
+
