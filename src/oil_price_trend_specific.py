@@ -13,6 +13,7 @@ from fbprophet import Prophet
 from fbprophet.diagnostics import cross_validation
 from fbprophet.diagnostics import performance_metrics
 from fbprophet.plot import plot_cross_validation_metric
+from fbprophet.plot import add_changepoints_to_plot
 import pandas as pd
 import copy
 import math
@@ -39,34 +40,39 @@ def oil_price_trend_2012_2016(data):
 
 def prediction(data):
     pd.plotting.register_matplotlib_converters()
-    fb_forecasting = Prophet()
+    fb_forecasting = Prophet(n_changepoints=4)
     data_frame = copy.deepcopy(data)
+
 
     # Prophet follows sklearn API
     # The input to Prophet is always a date frame with two columns 'ds' and 'y'
     # reference: https://facebook.github.io/prophet/
     data_frame.columns = ['ds', 'y']
-
+    data_frame['y'].replace('  ', '', inplace=True)
+    data_frame.dropna(subset=['y'], inplace=True)
     fb_forecasting.fit(data_frame)
-
     future = fb_forecasting.make_future_dataframe(periods=250)
-
     forecast = fb_forecasting.predict(future)
     fb_forecasting.plot_components(forecast)
     plt.title("Trend analysis of crude oil prices")
     plt.savefig('Results/trend.png', bbox_inches='tight')
     plt.show()
-    fb_forecasting.plot(forecast)
+    print("------------FORECAST----------------")
+    forecast.to_csv('forecast.csv', index=False)
+    print("------------FORECAST----------------")
+    fig = fb_forecasting.plot(forecast, xlabel="Year", ylabel="Crude Oil Price")
+    a = add_changepoints_to_plot(fig.gca(), fb_forecasting, forecast)
+    plt.title("Prophet Forecasting Model")
     plt.savefig('Results/forecast.png', bbox_inches='tight')
     plt.show()
 
     # Prophet Oil Forecasts
     forecast2019 = forecast[(forecast['ds'] >= '2019-01-01') & (forecast['ds'] <= '2020-01-21')]
     figure, ax = plt.subplots()
-    ax.plot(forecast2019['ds'], forecast2019['yhat'], label='Predicted Crude Oil Prices')
+    ax.plot(forecast2019['ds'], forecast2019['yhat'], label='Predicted Crude Oil Prices', color="red")
     prophet_data = data[data['Date'] >= '2019-01-01']
-    ax.plot(prophet_data['Date'], prophet_data['OilPrice'], label='Original Crude Oil Prices')
-    plt.ylim([0, 125])
+    ax.plot(prophet_data['Date'], prophet_data['OilPrice'], label='Original Crude Oil Prices', color="orange")
+    plt.ylim([0, 90])
     legend = ax.legend(loc='upper right', shadow=True)
     plt.title('Crude Oil Prices Forecasting using Prophet')
     plt.xlabel('Months')

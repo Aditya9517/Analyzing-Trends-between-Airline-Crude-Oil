@@ -59,3 +59,12 @@ Collating on time flight performance data (2016)
 python3 collate_flight_data.py
 ```
 
+Main file executes oil_price_trend.py, oil_price_trend_specific.py, sentiment_analyis_news_articles, analyze_flight_data_2016,and 
+reading_airline_data.py
+
+```
+python3 main.py
+```
+
+
+

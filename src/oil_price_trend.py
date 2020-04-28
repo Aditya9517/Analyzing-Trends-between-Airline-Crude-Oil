@@ -8,7 +8,7 @@ Created on Thu Jan 30 2020
 
 import matplotlib.pyplot as plt
 import pandas as pd
-
+from src.oil_price_forecasting import oil_prediction_lstm
 from src.oil_price_trend_specific import oil_price_trend_2012_2016
 
 
@@ -54,3 +54,4 @@ def read_data(data="Data/Cushing_OK_WTI_Spot_Price_FOB.csv"):
     plt.savefig('Results/AverageMonthlyFrequency.png',  bbox_inches='tight')
     # oil_prediction_lstm(data)
     return oil_price_trend_2012_2016(trend_data)
+

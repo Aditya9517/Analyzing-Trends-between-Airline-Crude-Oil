@@ -1,6 +1,7 @@
 from argparse import ArgumentParser
 from src.oil_price_trend import read_data
 from src.sentiment_analysis_news_articles import news_article_sentiment
+from src.analyze_flight_data_2016 import read_combined_data
 import warnings
 
 
@@ -23,6 +24,7 @@ def main():
 
     data_oil = read_data(args.crudeOilFile)
     news_article_sentiment(data_oil, args.crudeOilNews)
+    read_combined_data()
 
 
 if __name__ == '__main__':

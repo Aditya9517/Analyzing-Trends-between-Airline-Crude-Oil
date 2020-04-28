@@ -13,6 +13,10 @@ from keras.layers import Dropout, Dense
 from keras.layers import LSTM
 from keras.models import Sequential
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.metrics import mean_squared_error
+from keras.callbacks import ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 
 def convert_array_dataset(dataset, val):
@@ -105,3 +109,20 @@ def oil_prediction_lstm(wti_data):
     plt.plot(x, predict_test_data[:, 0][:180], 'r', label='production')
     plt.show()
     plt.tight_layout()
+
+    train_predict = regressor.predict(xy_train_test[0])
+    test_predict = regressor.predict(xy_train_test[2])
+
+    # invert predictions
+    train_predict = scaler.inverse_transform(train_predict)
+    Y_train = scaler.inverse_transform([xy_train_test[1]])
+    test_predict = scaler.inverse_transform(test_predict)
+    Y_test = scaler.inverse_transform([xy_train_test[3]])
+
+    print("-------------------------------------------PREDICTION ERRORS -------------------------------------------")
+
+    print('Train Mean Absolute Error:', mean_absolute_error(Y_train[0], train_predict[:, 0]))
+    print('Train Root Mean Squared Error:', np.sqrt(mean_squared_error(Y_train[0], train_predict[:, 0])))
+    print('Test Mean Absolute Error:', mean_absolute_error(Y_test[0], test_predict[:, 0]))
+    print('Test Root Mean Squared Error:', np.sqrt(mean_squared_error(Y_test[0], test_predict[:, 0])))
+    print("-------------------------------------------PREDICTION ERRORS -------------------------------------------")

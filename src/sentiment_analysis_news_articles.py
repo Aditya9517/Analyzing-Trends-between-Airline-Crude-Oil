@@ -33,7 +33,6 @@ def eliminate_url(input1):
     input_text = re.sub(r'http\S+', '', input_text)
     word_tokens = word_tokenize(input_text)
     word_tokens = list(filter(lambda x: x not in stop, word_tokens))
-    print(word_tokens)
     input_text = ' '.join(filter(lambda w: w not in stop_words, word_tokens))
 
     return input_text
@@ -99,18 +98,18 @@ def news_article_sentiment(data_oil, path="ScrapedNewsArticles/oil_news.json"):
     # df.rolling('6H').mean().plot()
     # plt.show()
 
-    # CORRELATION
-    print("-----------------CORRELATION--------------")
-    data_oil['Date'] = pd.to_datetime(data_oil['Date'])
-    data_oil['year'] = data_oil['Date'].dt.year
-    data_oil = data_oil.groupby('year').mean().reset_index()
-    range_dates = (data_oil['year'] > 2011) & (data_oil['year'] <= 2016)
-    data_oil = data_oil.loc[range_dates]
-    print(data_oil.head())
-    print(df)
-    corr = data_oil['OilPrice'].corr(df['sentiment'], method="kendall")
-    print("CORR = ", corr)
-    print("-----------------CORRELATION--------------")
+    # # CORRELATION
+    # print("-----------------CORRELATION--------------")
+    # data_oil['Date'] = pd.to_datetime(data_oil['Date'])
+    # data_oil['year'] = data_oil['Date'].dt.year
+    # data_oil = data_oil.groupby('year').mean().reset_index()
+    # range_dates = (data_oil['year'] > 2011) & (data_oil['year'] <= 2016)
+    # data_oil = data_oil.loc[range_dates]
+    # print(data_oil.head())
+    # print(df)
+    # corr = data_oil['OilPrice'].corr(df['sentiment'], method="kendall")
+    # print("CORR = ", corr)
+    # print("-----------------CORRELATION--------------")
 
     # function call to word cloud generator
     word_cloud_generator(data_frame_word_cloud)
